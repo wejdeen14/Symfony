@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+  <h1>liste Members</h1>
+          {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+          {% endif %}
+<table class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+	  <th>Id</th>
+      <th>Name</th>
+      <th>Contenus</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+	 {% for members in member %}
+            <tr>
+                	<td>{{ members.id }}</td>
+                <td>
+        		<div class="d-flex align-items-center">
+          		<div class="ms-3">    
+				    <p class="fw-bold mb-1">{{ members.name }}</p>
+            		<p class="text-muted mb-0">{{ members.email }}</p>
+				</div>
+        		</div>
+      			</td>
+                	<td><a href="">Contenus</a></td>
+                <td>
+                    <a href="{{ path('app_admin_show', {'id': members.id}) }}">show</a>
+                    <a href="{{ path('app_admin_edit', {'id': members.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+  </tbody>
+</table>
+</body>

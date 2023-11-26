@@ -1,0 +1,14 @@
+{% block title %}Edit Member{% endblock %}
+
+{% block body %}
+    <h1>Edit Member</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Update') }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_admin_home') }}">back to list</a>
+
+    {{ include('admin/delete.html.twig') }}
+{% endblock %}
