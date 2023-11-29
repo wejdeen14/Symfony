@@ -4,14 +4,10 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-app_login_member:
-    path: /login/member
-    controller: App\Controller\SecurityController::loginMember
+app_login:
+    path: /login/test
+    controller: App\Controller\SecurityController::login
 
 app_login_admin:
     path: /login/admin
     controller: App\Controller\SecurityController::loginAdmin
-
-app_login_moderateur:
-    path: /login/moderateur
-    controller: App\Controller\SecurityController::loginModerateur

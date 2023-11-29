@@ -22,7 +22,13 @@
             </tr>
             <tr>
                 <th>Contenus</th>
-                <td>{{ }}</td>
+                <td>
+                	 {% for members in member.getContenus() %}
+                   <ul>
+                      <li>{{members.text}}</li>   
+                   </ul>
+                           {% endfor %}
+                           </td>
             </tr>
         </tbody>
 </table>

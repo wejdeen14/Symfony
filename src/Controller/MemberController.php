@@ -18,4 +18,11 @@ class MemberController extends AbstractController
             'controller_name' => 'LoginController',
         ]);
     }
+    #[Route('/request', name: 'app_member_request')]
+    public function request(): Response
+    {
+        return $this->render('member/request.html.twig', [
+            'controller_name' => 'LoginController',
+        ]);
+    }
 }

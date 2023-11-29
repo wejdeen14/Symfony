@@ -29,7 +29,6 @@ class ModerateurController extends AbstractController
     #[Route('/{id}', name: 'app_moderateur_show',methods:['GET'])]
     public function show(Contenu $contenu): Response
     {
-
         return $this->render('moderateur/show.html.twig', [
             'contenu' => $contenu,
         ]);

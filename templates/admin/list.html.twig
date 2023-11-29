@@ -12,7 +12,7 @@
   <h1>liste Members</h1>
           {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                {#You are logged in as {{ app.user.userIdentifier }},#} <a href="{{ path('app_logout') }}">Logout</a>
             </div>
           {% endif %}
 <table class="table align-middle mb-0 bg-white">
@@ -20,7 +20,6 @@
     <tr>
 	  <th>Id</th>
       <th>Name</th>
-      <th>Contenus</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -36,7 +35,6 @@
 				</div>
         		</div>
       			</td>
-                	<td><a href="">Contenus</a></td>
                 <td>
                     <a href="{{ path('app_admin_show', {'id': members.id}) }}">show</a>
                     <a href="{{ path('app_admin_edit', {'id': members.id}) }}">edit</a>
