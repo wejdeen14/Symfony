@@ -20,7 +20,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: register/
+                target: app_register_member
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -28,7 +28,7 @@ security:
                 path: /
                 always_remember_me: true
     role_hierarchy:
-            ROLE_MEMBER:       [ROLE_USER]
+            ROLE_MEMBER:       ROLE_USER
             ROLE_MODERATEUR:  [ROLE_MEMBER]
             ROLE_ADMIN:       [ROLE_MODERATEUR]
 

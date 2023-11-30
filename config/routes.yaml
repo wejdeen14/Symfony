@@ -11,3 +11,7 @@ app_login:
 app_login_admin:
     path: /login/admin
     controller: App\Controller\SecurityController::loginAdmin
+
+app_member_search:
+    path: /member/home/search
+    controller: App\Controller\MemberController::search

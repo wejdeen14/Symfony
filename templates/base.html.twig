@@ -22,18 +22,15 @@
         <a class="nav-link" href="{{ path('app_member_request') }}">friend requests</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-    </form> 
-  </div>
-          {% if app.user %}
+   
+    {% if app.user %}
             <div class="mb-3">
                 <a href="{{ path('app_logout') }}">Logout</a>
             </div>
       {% endif %}
 </nav>                          
      {% block body %}
+     
     {% endblock %}
     </body>
     </html>

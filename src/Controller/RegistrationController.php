@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 #[Route('/register')]
 class RegistrationController extends AbstractController
 {
-    #[Route('/', name: 'app_register_member')]
+    #[Route('/member', name: 'app_register_member')]
     public function registerMember(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -30,8 +30,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            dd($user);
             $user->setRoles(['ROLE_MEMBER']);
+            $user->setPassNotHashed($form->getPassword);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(['ROLE_MODERATEUR']);
-
+            $user->setPassNotHashed($form->getPassword);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

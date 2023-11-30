@@ -1,0 +1,13 @@
+{# search.html.twig #}
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form.name) }}
+    {{ form_end(form) }}
+    {% if search is not empty %}
+        <ul>
+            {% for user in search %}
+                <li>{{ user.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
