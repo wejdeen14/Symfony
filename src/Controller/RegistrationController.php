@@ -23,6 +23,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassNotHashed($form->getPassword);
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -31,11 +32,10 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(['ROLE_MEMBER']);
-            $user->setPassNotHashed($form->getPassword);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
-
+            dd($user);
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
@@ -56,6 +56,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassNotHashed($form->getPassword);
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -64,7 +65,6 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(['ROLE_MODERATEUR']);
-            $user->setPassNotHashed($form->getPassword);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

@@ -84,7 +84,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
                 return $this->urlGenerator->generate(self::LOGIN_ROUTE_ADMIN);
             default:
                 // Redirect to a default login route or throw an exception if needed
-                return $this->urlGenerator->generate('app_register_member'); // Change 'app_login' to your default login route
+                throw new AuthenticationException("wrong route "); // Change 'app_login' to your default login route
         }
 }
 }
