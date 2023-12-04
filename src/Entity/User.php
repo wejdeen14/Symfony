@@ -42,9 +42,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $passNotHashed = null;
 
+    #[ORM\OneToMany(mappedBy: 'amis_id', targetEntity: Amis::class)]
+    private Collection $amis;
+
     public function __construct()
     {
         $this->contenus = new ArrayCollection();
+        $this->amis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +171,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassNotHashed(string $passNotHashed): static
     {
         $this->passNotHashed = $passNotHashed;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Amis>
+     */
+    public function getAmis(): Collection
+    {
+        return $this->amis;
+    }
+
+    public function addAmi(Amis $ami): static
+    {
+        if (!$this->amis->contains($ami)) {
+            $this->amis->add($ami);
+            $ami->setAmisId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAmi(Amis $ami): static
+    {
+        if ($this->amis->removeElement($ami)) {
+            // set the owning side to null (unless already changed)
+            if ($ami->getAmisId() === $this) {
+                $ami->setAmisId(null);
+            }
+        }
 
         return $this;
     }

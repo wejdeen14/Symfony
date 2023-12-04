@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Psr\Log\LoggerInterface;
+use App\Repository\AmisRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request; 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,5 +52,21 @@ public function search(UserRepository $userRepository, Request $request): Respon
         'search' => $searchResults,
     ]);
 }
-
+#[Route('/search/invite/{amis_id}', name: 'app_member_search_invitation')]
+    public function invite(AmisRepository $reposAmis,$id,$amis_id,UserRepository $reposUser,User $user,LoggerInterface $logger):JsonResponse{
+        $utilisateur=$user->getId();
+        $amis=$reposUser->AmisId($amis_id);
+        $invitationResult=$reposAmis->invitation($utilisateur,$amis);
+        if ($invitationResult > 0) {
+            // Invitation successful
+            if ($invitationResult > 0) {
+                // Invitation successful
+                $logger->info("Invitation successful");
+            } else {
+                // Invitation failed
+                $logger->error("Invitation failed");
+            }
+            return new JsonResponse(['success' => $invitationResult > 0]);
+    }
+}
 }

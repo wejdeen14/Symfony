@@ -3,4 +3,5 @@
 
 {% block body %}  
     <p>{{ app.user.userIdentifier }}</p>
+     {{ render(path('app_member_search'))}}
 {% endblock %}
