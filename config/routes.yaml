@@ -5,13 +5,10 @@ controllers:
     type: attribute
 
 app_login:
-    path: /login/test
+    path: /login/
     controller: App\Controller\SecurityController::login
 
 app_login_admin:
     path: /login/admin
     controller: App\Controller\SecurityController::loginAdmin
 
-app_member_search:
-    path: /member/home/search
-    controller: App\Controller\MemberController::search

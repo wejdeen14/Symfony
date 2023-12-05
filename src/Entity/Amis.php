@@ -13,16 +13,42 @@ class Amis
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\ManyToOne(inversedBy: 'amis')]
+    private ?User $utilisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'amis')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?user $amis_id = null;
+    private ?User $amis = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUtilisateur(): ?User
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?User $utilisateur): static
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getAmis(): ?User
+    {
+        return $this->amis;
+    }
+
+    public function setAmis(?User $amis): static
+    {
+        $this->amis = $amis;
+
+        return $this;
     }
 
     public function getStatus(): ?string
@@ -30,22 +56,14 @@ class Amis
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(?string $status): static
     {
         $this->status = $status;
 
         return $this;
     }
-
-    public function getAmisId(): ?user
+    public function __toString()
     {
-        return $this->amis_id;
-    }
-
-    public function setAmisId(?user $amis_id): static
-    {
-        $this->amis_id = $amis_id;
-
-        return $this;
+        $this->status;
     }
 }

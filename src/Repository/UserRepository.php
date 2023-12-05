@@ -3,11 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -76,7 +77,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT name FROM user u
+            SELECT name,id FROM user u
             WHERE u.name LIKE :search and u.roles LIKE :role
             ORDER BY u.name ASC
             ';
@@ -87,21 +88,50 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    public function friends($id, EntityManagerInterface $entityManager): array {
+        $qb = $entityManager->createQueryBuilder();
     
-    //userRepository
-    public function AmisId($id): array
-    {
+        $qb->select('u.name, u.id,a.id')
+            ->from('App\Entity\User', 'u')
+            ->join('App\Entity\Amis', 'a', 'WITH', 'a.amis = u.id')
+            ->where($qb->expr()->eq('a.status', ':status'))
+            ->andWhere($qb->expr()->eq('a.utilisateur', ':id'))
+            ->orderBy('u.name', 'ASC');
+    
+        $qb->setParameter('status', 'invite');
+        $qb->setParameter('id', $id);
+    
+        $query = $qb->getQuery();
+        $friends = $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+    
+        return $friends;
+    }
+
+    public function ListeFriends():array{
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
-            SELECT id FROM user u
-            WHERE u.id = :id and u.roles LIKE :role
-            ORDER BY u.name ASC
-            ';
-        $resultSet = $conn->executeQuery($sql, ['role' => '%"ROLE_MEMBER"%', 'id'=> $id]);
-        
+        SELECT *
+        FROM user u
+        JOIN amis a ON a.utilisateur_id = u.id
+        WHERE u.roles LIKE :role AND a.status = :status';
+        $resultSet = $conn->executeQuery($sql, ['role' => '%"ROLE_MEMBER"%','Amis'=>'invite']);
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    public function ListeContenus($id):array{
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+        SELECT c.text,a.name
+        FROM contenu c
+        JOIN amis a ON a.amis_id = c.user_id
+        WHERE a.utilisateur_id = :id';
+        $resultSet = $conn->executeQuery($sql, ['id'=>$id]);
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+    
     
 
 }

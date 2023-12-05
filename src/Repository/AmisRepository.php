@@ -21,19 +21,6 @@ class AmisRepository extends ServiceEntityRepository
         parent::__construct($registry, Amis::class);
     }
 
-    //amisRepository
-    public function invitation($id,$amis_id):int
-    {
-        $conn = $this->getEntityManager()->getConnection();
-        $sql = '
-        INSERT INTO amis (id,amis_id_id,status) VALUES (:id,:amis_id,:invite)
-            ';
-        $resultSet = $conn->executeQuery($sql, ['id'=> $id,'amis_id'=>$amis_id,'invite'=>'invitation']);
-        // returns an array of arrays (i.e. a raw data set)
-        $rowCount = $resultSet->rowCount();
-        return $rowCount;
-    }
-
 //    /**
 //     * @return Amis[] Returns an array of Amis objects
 //     */

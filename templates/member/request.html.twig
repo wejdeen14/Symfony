@@ -1,6 +1,24 @@
-{% extends 'base.html.twig' %}
-{% block title %}Hello Acceuil!{% endblock %}
-
 {% block body %}
-    <h1>page d'acceuil</h1>
+    <h1>Friend Requests</h1>
+
+    {% if friends is not empty %}
+        <ul>
+            {% for friend in friends %}
+                <li>
+                    {{ friend.name }}
+                    <form action="{{ path('app_member_request_confirme') }}" method="post">
+                        <input type="hidden" value="{{ friend.id }}" name="userId">
+                        <button type="submit">confirme</button>
+                    </form>
+                    <form action="{{ path('app_member_request_annuler') }}" method="post">
+                        <input type="hidden" value="{{ friend.id }}" name="userId">
+                        <button type="submit">Annuler</button>
+                    </form>
+                    
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No friend requests at the moment.</p>
+    {% endif %}
 {% endblock %}

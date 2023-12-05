@@ -1,0 +1,11 @@
+{% block body %}
+    <h1>ajoute Contenu</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form.text, {'attr': {'placeholder': 'Text'}}) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_member_home') }}">back to home</a>
+
+    {{ include('admin/_delete.html.twig') }}
+{% endblock %}

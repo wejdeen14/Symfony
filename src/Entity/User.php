@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $passNotHashed = null;
 
-    #[ORM\OneToMany(mappedBy: 'amis_id', targetEntity: Amis::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Amis::class)]
     private Collection $amis;
 
     public function __construct()
@@ -187,7 +187,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->amis->contains($ami)) {
             $this->amis->add($ami);
-            $ami->setAmisId($this);
+            $ami->setUtilisateur($this);
         }
 
         return $this;
@@ -197,11 +197,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->amis->removeElement($ami)) {
             // set the owning side to null (unless already changed)
-            if ($ami->getAmisId() === $this) {
-                $ami->setAmisId(null);
+            if ($ami->getUtilisateur() === $this) {
+                $ami->setUtilisateur(null);
             }
         }
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 }

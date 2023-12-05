@@ -40,7 +40,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         if (!in_array('ROLE_ADMIN', $userRoles) && str_contains($url,"admin")) {
             throw new AuthenticationException("only admin ");
         }
-        if (in_array('ROLE_ADMIN', $userRoles) && str_contains($url,"test")) {
+        if (in_array('ROLE_ADMIN', $userRoles) && str_contains($url,"login/")) {
             throw new AuthenticationException("wrong utilisateur area ");
         }
     }

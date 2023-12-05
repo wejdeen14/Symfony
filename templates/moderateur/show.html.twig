@@ -26,4 +26,9 @@
             </tr>
         </tbody>
 </table>
+<a href="{{ path('app_moderateur_home') }}">back to list</a>
+
+<a href="{{ path('app_moderateur_edit', {'id': contenu.id}) }}">edit</a>
+
+{{ include('moderateur/_delete.html.twig') }}
 </body>

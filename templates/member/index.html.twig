@@ -2,6 +2,7 @@
 {% block title %}Hello Acceuil!{% endblock %}
 
 {% block body %}  
+
     <p>{{ app.user.userIdentifier }}</p>
-     {{ render(path('app_member_search'))}}
+    <a href="{{ path('app_member_add') }}">ajoute Contenu</a>
 {% endblock %}

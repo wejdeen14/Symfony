@@ -23,13 +23,25 @@
       </li>  
 
     </ul>
+    {{ form_start(form) }}
+    {{ form_widget(form.name) }}
+    {{ form_end(form) }}
 
     {% if app.user %}
             <div class="mb-3">
                 <a href="{{ path('app_logout') }}">Logout</a>
             </div>
       {% endif %}
-</nav>                          
+</nav>       
+{% if search is not empty %}
+{% for user in search %}
+    <li>{{ user.name }}</li>
+    <form action="{{path('app_member_search_invite')}}" method="post" >
+        <input type="hidden" value="{{user.id}}" name="userId">
+    <button type="submit">Invite</button>
+</form>
+{% endfor %}
+{% endif %}                   
         {% block body %}
              
     {% endblock %}

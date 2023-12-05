@@ -32,4 +32,9 @@
             </tr>
         </tbody>
 </table>
+<a href="{{ path('app_admin_home') }}">back to list</a>
+
+<a href="{{ path('app_admin_edit', {'id': member.id}) }}">edit</a>
+
+{{ include('admin/_delete.html.twig') }}
 </body>
