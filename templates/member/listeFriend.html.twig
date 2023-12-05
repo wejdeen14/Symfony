@@ -1,0 +1,11 @@
+{% if friends is not empty %}
+<ul>
+    {% for friend in friends %}
+        <li>
+            {{ friend.name }}            
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No friends </p>
+{% endif %}

@@ -19,7 +19,7 @@ class Contenu
     private ?string $text = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeImmutable $date_publication = null;
+    private ?\DateTimeInterface $date_publication = null;
 
     #[ORM\ManyToOne(inversedBy: 'contenus')]
     private ?User $user = null;
@@ -41,12 +41,12 @@ class Contenu
         return $this;
     }
 
-    public function getDatePublication(): ?\DateTimeImmutable
+    public function getDatePublication(): ?\DateTimeInterface
     {
         return $this->date_publication;
     }
 
-    public function setDatePublication(\DateTimeImmutable $date_publication): static
+    public function setDatePublication(\DateTimeInterface $date_publication): static
     {
         $this->date_publication = $date_publication;
 

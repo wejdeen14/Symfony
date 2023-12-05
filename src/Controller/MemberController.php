@@ -4,26 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Amis;
 use App\Entity\User;
-use App\Form\AmisType;
 use App\Form\UserType;
 use App\Entity\Contenu;
-use App\Form\ContenuType;
-use Psr\Log\LoggerInterface;
-use Doctrine\ORM\EntityManager;
+use App\Form\Contenu2Type;
 use App\Repository\AmisRepository;
 use App\Repository\UserRepository;
-use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request; 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 #[IsGranted('ROLE_MEMBER')]
 #[Route('/member/home')]
@@ -72,56 +64,64 @@ public function request(Security $security,UserRepository $userRepository,Reques
         'friends'=>$friends,
     ]);
 }
-#[Route('/request/confirme', name: 'app_member_request_confirme')]
+#[Route('/request/confirme', name: 'app_member_request_confirme', methods: ['GET', 'POST'])]
 public function confirme(Security $security,EntityManagerInterface $entityManager, Request $request, AmisRepository $userRepository): Response
 {
-    $amis=new Amis();
-    $amis2=$userRepository->find($request->request->get('userId'));
-    dd($amis2);
-    $amis2->setStatus('Amis');
+    $utilisateur=$security->getUser()->getUserIdentifier();
+    $user=$userRepository->findOneBy(['name'=>$utilisateur]);
+    $amis=$user->getAmis();
     $entityManager->persist($amis);
     $entityManager->flush();
-    return $this->redirectToRoute('app_member_home');
+    return $this->redirectToRoute('app_member_home',[], Response::HTTP_SEE_OTHER);
+    
 }
-#[Route('/request/annuler/', name: 'app_member_request_annuler')]
-public function delete(AmisRepository $repos,$id,EntityManagerInterface $entityManager){
-
-        $friends = $repos->find($id);
-        $entityManager->remove($friends);
+#[Route('/request/annuler/', name: 'app_member_request_annuler', methods: ['POST'])]
+public function delete(Security $security,UserRepository $userRepository,Request $request,EntityManagerInterface $entityManager): Response
+{
+    $ami=new Amis();
+    $utilisateur=$security->getUser()->getUserIdentifier();
+    $user=$userRepository->findOneBy(['name'=>$utilisateur]);
+    $amis=$user->removeAmi($ami);
+        $entityManager->remove($ami);
         $entityManager->flush();
-        return $this->redirectToRoute("app_member_request");
+
+    return $this->redirectToRoute('app_member_home', [], Response::HTTP_SEE_OTHER);
 }
+
 #[Route('/liste/friends', name: 'app_member_friends')]
-public function ListeFriends(UserRepository $userRepository):Response{
-    $friends=$userRepository->ListeFriends();
-    return $this->render('member/request.html.twig', [
+public function ListeFriends(Security $security,UserRepository $userRepository,Request $request,EntityManagerInterface $entityManager):Response{
+    $utilisateur=$security->getUser()->getUserIdentifier();
+    $user=$userRepository->findOneBy(['name'=>$utilisateur]);
+    $friends=$userRepository->ListeFriends($user,$entityManager);
+    return $this->render('member/listeFriend.html.twig', [
         'friends'=>$friends,
     ]);
 }
 #[Route('/add', name: 'app_member_add')]
-public function addContenu(Security $security,Request $request,UserRepository $userRepository, Contenu $contenu, EntityManagerInterface $entityManager):Response{
+public function addContenu(Security $security,Request $request,UserRepository $userRepository,EntityManagerInterface $entityManager):Response{
     $contenu = new Contenu();
-    $form = $this->createForm(ContenuType::class, $contenu);
+    $form = $this->createForm(Contenu2Type::class, $contenu);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $contenu->setText($form->get('text')->getData());
         $contenu->setDatePublication(new \DateTimeImmutable);
         $utilisateur=$security->getUser()->getUserIdentifier();
         $user=$userRepository->findOneBy(['name'=>$utilisateur]);
-        $contenu->setUser($user);
+        $contenu->setUser($user->getId());
         $entityManager->persist($contenu);
         $entityManager->flush();
+    }
     return $this->render('member/addContenu.html.twig', [
-        'Form' => $form->createView(),
+        'form' => $form->createView(),
     ]);
-}
+
 }
 #[Route('/liste/contenus', name: 'app_member_contenus')]
 public function ListeContenus(UserRepository $userRepository,Security $security,Request $request,):Response{
     $utilisateur=$security->getUser()->getUserIdentifier();
     $user=$userRepository->findOneBy(['name'=>$utilisateur]);
-    $contenus=$userRepository->ListeContenus($user);
-    return $this->render('member/request.html.twig', [
+    $contenus=$userRepository->ListeContenus($user->getId());
+    return $this->render('member/listeContenu.html.twig', [
         'contenus'=>$contenus,
     ]);
 }

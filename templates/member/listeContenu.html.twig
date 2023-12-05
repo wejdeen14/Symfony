@@ -1,0 +1,12 @@
+{% if contenus is not empty %}
+    <ul>
+        {% for contenu in contenus %}
+            <li>
+                {{ contenu.name }}
+                {{ contenu.text }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <a href="{{ path('app_member_add') }}">Ajouter un Contenu</a>
+{% endif %}
