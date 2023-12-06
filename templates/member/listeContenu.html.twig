@@ -1,12 +1,18 @@
-{% if contenus is not empty %}
-    <ul>
-        {% for contenu in contenus %}
-            <li>
-                {{ contenu.name }}
-                {{ contenu.text }}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <a href="{{ path('app_member_add') }}">Ajouter un Contenu</a>
-{% endif %}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if contenus is not empty %}
+        <ul style="list-style: none; padding: 0;">
+            {% for contenu in contenus %}
+                <li style="border: 1px solid #ccc; border-radius: 5px; margin: 10px 0; padding: 10px;">
+                    <span style="font-weight: bold;">{{ contenu.name }}</span>
+                    <p style="margin-top: 5px;">{{ contenu.text }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p style="text-align: center; font-size: 18px; color: #515151;">
+            Aucun contenu trouvé. <a href="{{ path('app_member_add') }}" style="color: #FF69B4;">Ajouter un nouveau Contenu</a>
+        </p>
+    {% endif %}
+{% endblock %}

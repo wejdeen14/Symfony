@@ -1,10 +1,31 @@
+{% extends 'base.html.twig' %}
+
 {% block body %}
-    <h1>ajoute Contenu</h1>
+    <div style="width: 450px;  height:300px;/* Ajustez la largeur selon vos besoins */
+                margin: 50px auto; /* Centre le cadre horizontalement avec une marge de 20px en haut et en bas */
+                padding: 30px; /* Ajoute un remplissage pour un meilleur aspect */
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
+                border: 1px solid #ccc; /* Ajoute une bordure */
+                border-radius: 10px; /* Ajoute un effet de rayon aux coins */
+                background-color: #fff;  /* Ajoute une couleur d'arrière-plan pour un meilleur contraste */
+                text-align:center;
+            ">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="font-size: 26px; font-family: Arial, sans-serif; color: black; margin-top: 5px;">Ajouter votre  Contenu</h1>
+        </div>
 
-    {{ form_start(form) }}
-    {{ form_widget(form.text, {'attr': {'placeholder': 'Text'}}) }}
-    {{ form_end(form) }}
+        <div style="margin-bottom: 20px;">
+            {{ form_start(form) }}
+            {{ form_widget(form.text, {'attr': {'placeholder': 'Publiez votre blog', 'style': 'width: 100%;   border-radius: 5px; padding: 15px; box-sizing: border-box; margin-bottom: 10px;'}}) }}
+            {{ form_end(form) }}
+        </div>
 
-    <a href="{{ path('app_member_home') }}">back to home</a>
-
+        <div>
+            <a href="{{ path('app_member_home') }}" style="display: block; text-align: center; text-decoration: none;">
+                <button style="padding: 10px 20px; border: none; border-radius: 5px; background-color: #FF69B4; color: #fff; cursor: pointer; background: linear-gradient(to right, #FF69B4, #FF0000);">
+                    Retour à l'accueil
+                </button>
+            </a>
+        </div>
+    </div>
 {% endblock %}

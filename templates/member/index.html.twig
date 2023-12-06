@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
-{% block title %}Hello Acceuil!{% endblock %}
+{% block title %}Hello Accueil!{% endblock %}
 
 {% block body %}  
+    <h2 style="font-size: 26px; font-style: Arial; color: #515151; margin-top: 20px;">
+        Bienvenue {{ app.user.userIdentifier }},
+    </h2>
 
-    <p>{{ app.user.userIdentifier }}</p>
-    <a href="{{ path('app_member_add') }}">ajoute Contenu</a>
-    <a href="{{ path('app_member_friends') }}">Liste Friends</a>
-    <a href="{{ path('app_member_contenus') }}">Liste Contenus</a>
-    
+    <a class="nav-link" href="{{ path('app_member_add') }}">
+        <button style="padding: 10px 20px; border: none; border-radius: 5px; background: linear-gradient(to right, #FF69B4, #FF0000); color: #fff; cursor: pointer;">
+            Add contenu
+        </button>
+    </a>
 {% endblock %}

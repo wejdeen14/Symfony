@@ -1,17 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  </head>
-  <body>
-  <h1>Member Details</h1>
-<table class="table align-middle mb-0 bg-white">
-<tbody>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Member Details</h1>
+    <a href="{{ path('app_admin_home') }}"style="display: block; text-align: right; text-decoration: none; margin-right:10px;">
+                <button style="padding: 10px 20px; border: none; border-radius: 5px; background-color: #FF69B4; color: #fff; cursor: pointer; background: linear-gradient(to right, #FF69B4, #FF0000);">
+                    Back to List
+                </button>
+            </a>
+
+
+    <table class="table align-middle mb-0 bg-white">
+        <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ member.id }}</td>
@@ -23,18 +67,29 @@
             <tr>
                 <th>Contenus</th>
                 <td>
-                	 {% for members in member.getContenus() %}
-                   <ul>
-                      <li>{{members.text}}</li>   
-                   </ul>
-                           {% endfor %}
-                           </td>
+                    {% for content in member.getContenus() %}
+                        <ul>
+                            <li>{{ content.text }}</li>   
+                        </ul>
+                    {% endfor %}
+                </td>
             </tr>
         </tbody>
-</table>
-<a href="{{ path('app_admin_home') }}">back to list</a>
+    </table>
 
-<a href="{{ path('app_admin_edit', {'id': member.id}) }}">edit</a>
+    <div style="display=blok;">
+   
+      <a href="{{ path('app_admin_edit', {'id': member.id}) }}"style="display: block; text-align: right; text-decoration: none; margin-right:30px; margin-top:10px;">
+                <button  class="btn btn-outline-success" >
+                Edit
+                </button>
+            </a>
 
-{{ include('admin/_delete.html.twig') }}
+
+            </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-4oTk50jNp3u2FVqZl/cLST5DJnI3p7qCUBCMyXaPqz2Lefw83s3dx2I4lRZM8C5a" crossorigin="anonymous"></script>
 </body>
+</html>

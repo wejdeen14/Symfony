@@ -1,14 +1,39 @@
-{% block title %}Edit Member{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Edit Member</h1>
+<div style="width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            ">
+
+    <h1 style="font-size: 26px; font-family: Arial, sans-serif; color: black; margin-top: 5px; text-align: center;">Edit Member</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Update') }}</button>
-    {{ form_end(form) }}
 
-    <a href="{{ path('app_admin_home') }}">back to list</a>
+    <div class="mb-3">
+        {{ form_row(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
+    </div>
 
-    {{ include('admin/_delete.html.twig') }}
+    <div class="mb-3">
+        {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+    </div>
+<div class="mb-3">
+    <!-- Add more fields as needed -->
+   {{ form_end(form) }}
+
+     </div>
+
+    <div class="mb-3">
+
+        <button type="submit" class="btn btn-outline-primary">{{ button_label|default('Update') }}</button>
+    </div>
+
+   {{ include('admin/_delete.html.twig') }} 
+
+    <a href="{{ path('app_admin_home') }}" class="btn btn-outline-primary">Back to List</a>
+</div>
 {% endblock %}

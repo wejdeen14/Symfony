@@ -1,50 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  </head>
-  <body>
-  <h1>liste Members</h1>
-          {% if app.user %}
-            <div class="mb-3">
-                {#You are logged in as {{ app.user.userIdentifier }},#} <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-          {% endif %}
-<table class="table align-middle mb-0 bg-white">
-  <thead class="bg-light">
-    <tr>
-	  <th>Id</th>
-      <th>Name</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-	 {% for members in member %}
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste Members</h1>
+
+    {% if app.user %}
+        <div class="mb-3">
+            <a href="{{ path('app_logout') }}" style="display: block; text-align: right; text-decoration: none; margin-right:10px;">
+                <button style="padding: 10px 20px; border: none; border-radius: 5px; background-color: #FF69B4; color: #fff; cursor: pointer; background: linear-gradient(to right, #FF69B4, #FF0000);">
+                    Logout
+                </button>
+            </a>
+        </div>
+    {% endif %}
+
+    <table class="table table-striped table-hover">
+        <thead class="bg-light">
             <tr>
-                	<td>{{ members.id }}</td>
-                <td>
-        		<div class="d-flex align-items-center">
-          		<div class="ms-3">    
-				    <p class="fw-bold mb-1">{{ members.name }}</p>
-            		<p class="text-muted mb-0">{{ members.email }}</p>
-				</div>
-        		</div>
-      			</td>
-                <td>
-                    <a href="{{ path('app_admin_show', {'id': members.id}) }}">show</a>
-                    <a href="{{ path('app_admin_edit', {'id': members.id}) }}">edit</a>
-                </td>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-  </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for members in member %}
+                <tr>
+                    <td>{{ members.id }}</td>
+                    <td>{{ members.name }}</td>
+                    <td>{{ members.email }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_show', {'id': members.id}) }}" class="btn btn-outline-primary">
+                            Show
+                        </a>
+                        <a href="{{ path('app_admin_edit', {'id': members.id}) }}" class="btn btn-outline-success">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-4oTk50jNp3u2FVqZl/cLST5DJnI3p7qCUBCMyXaPqz2Lefw83s3dx2I4lRZM8C5a" crossorigin="anonymous"></script>
 </body>
+</html>

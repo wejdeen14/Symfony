@@ -1,24 +1,24 @@
+{% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Friend Requests</h1>
+    <h1 style="font-size: 26px; font-family: Arial, sans-serif; color: #515151; margin-top: 20px; text-align: center;">Friend Requests</h1>
 
     {% if friends is not empty %}
-        <ul>
+        <ul style="list-style: none; padding: 0;">
             {% for friend in friends %}
-                <li>
-                    {{ friend.name }}
-                    <form action="{{ path('app_member_request_confirme') }}" method="post">
+                <li style="border: 1px solid #ccc; border-radius: 5px; margin: 10px 0; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="flex-grow: 1;">{{ friend.name }}</span>
+                    <form action="{{ path('app_member_request_confirme') }}" method="post" style="margin-right: 10px;">
                         <input type="hidden" value="{{ friend.id }}" name="userId">
-                        <button type="submit">confirme</button>
+                        <button type="submit" style="padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Confirmer</button>
                     </form>
                     <form method="post" action="{{ path('app_member_request_annuler', {'id': friend.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ friend.id) }}">
-                        <button class="btn">Delete</button>
+                        <button type="submit" style="padding: 8px 16px; background-color: #FF0000; color: white; border: none; border-radius: 5px; cursor: pointer;">Supprimer</button>
                     </form>
-                    
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No friend requests at the moment.</p>
+        <p style="text-align: center;">No friend requests at the moment.</p>
     {% endif %}
 {% endblock %}

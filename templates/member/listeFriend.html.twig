@@ -1,11 +1,12 @@
+
 {% if friends is not empty %}
-<ul>
-    {% for friend in friends %}
-        <li>
-            {{ friend.name }}            
-        </li>
-    {% endfor %}
-</ul>
+    <ul style="list-style: none; padding: 0;">
+        {% for friend in friends %}
+            <li style="border: 1px solid #ccc; border-radius: 5px; margin: 10px 0; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="flex-grow: 1;">{{ friend.name }}</span>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-<p>No friends </p>
+    <p style="text-align: center; font-size: 18px; color: #515151;">No friends</p>
 {% endif %}

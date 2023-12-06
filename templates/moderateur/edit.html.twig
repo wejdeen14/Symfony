@@ -1,14 +1,40 @@
-{% block title %}Edit Contnu{% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Contenu{% endblock %}
 
 {% block body %}
-    <h1>Edit Contenu</h1>
+    <div style="width: 600px;
+                margin: 50px auto;
+                padding: 30px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                background-color: #fff;
+                ">
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Update') }}</button>
-    {{ form_end(form) }}
+        <h1 style="font-size: 26px; font-family: Arial, sans-serif; color: black; margin-top: 5px; text-align: center;">Edit Contenu</h1>
 
-    <a href="{{ path('app_moderateur_home') }}">back to list</a>
+        {{ form_start(form) }}
 
-    {{ include('moderateur/_delete.html.twig') }}
+        <div class="mb-3">
+            {{ form_row(form.text, {'attr': {'class': 'form-control', 'placeholder': 'Text'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {# Assuming you have a 'getUser' method in your form, replace 'getUser' with the actual method name #}
+            {{ form_row(form.user, {'attr': {'class': 'form-control', 'placeholder': 'User'}}) }}
+        </div>
+
+        <!-- Add more fields as needed -->
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-outline-primary">{{ button_label|default('Update') }}</button>
+        </div>
+
+        {{ form_end(form) }}
+
+        {{ include('moderateur/_delete.html.twig') }}
+
+        <a href="{{ path('app_moderateur_home') }}" class="btn btn-outline-primary">Back to List</a>
+    </div>
 {% endblock %}
